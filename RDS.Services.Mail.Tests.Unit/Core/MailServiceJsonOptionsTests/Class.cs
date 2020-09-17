@@ -1,110 +1,110 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Xunit;
+﻿//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Text;
+//using Xunit;
 
-namespace RDS.Services.Mail.Tests.Unit.MailServiceJsonOptionsTests
-{
-    [Trait("Category", "MailServiceJsonOptions")]
-    public class Class
-    {
-        MailServiceJsonOptions _options = new MailServiceJsonOptions();
+//namespace RDS.Services.Mail.Tests.Unit.MailServiceJsonOptionsTests
+//{
+//    [Trait("Category", "MailServiceJsonOptions")]
+//    public class Class
+//    {
+//        MailServiceJsonOptions _options = new MailServiceJsonOptions();
 
-        [Fact]
-        public void ItExists()
-        {
-            MailServiceJsonOptions options = new MailServiceJsonOptions();
-        }
+//        [Fact]
+//        public void ItExists()
+//        {
+//            MailServiceJsonOptions options = new MailServiceJsonOptions();
+//        }
 
-        [Fact]
-        public void ItHasWritableSmtpHostProperty()
-        {
-            var value = "value";
+//        [Fact]
+//        public void ItHasWritableSmtpHostProperty()
+//        {
+//            var value = "value";
 
-            _options.SmtpHost = value;
+//            _options.SmtpHost = value;
 
-            Assert.Equal(value, _options.SmtpHost);
-        }
+//            Assert.Equal(value, _options.SmtpHost);
+//        }
 
-        [Fact]
-        public void ItHasWritableSmtpPortProperty()
-        {
-            var value = 565;
+//        [Fact]
+//        public void ItHasWritableSmtpPortProperty()
+//        {
+//            var value = 565;
 
-            _options.SmtpPort = value;
+//            _options.SmtpPort = value;
 
-            Assert.Equal(value, _options.SmtpPort);
-        }
+//            Assert.Equal(value, _options.SmtpPort);
+//        }
 
-        [Fact]
-        public void ItHasWritableSmtpUsernameProperty()
-        {
-            var value = "username";
+//        [Fact]
+//        public void ItHasWritableSmtpUsernameProperty()
+//        {
+//            var value = "username";
 
-            _options.SmtpUsername = value;
+//            _options.SmtpUsername = value;
 
-            Assert.Equal(value, _options.SmtpUsername);
-        }
+//            Assert.Equal(value, _options.SmtpUsername);
+//        }
 
-        [Fact]
-        public void ItHasWritableSmtpPasswordProperty()
-        {
-            var value = "p@ssw0rd";
+//        [Fact]
+//        public void ItHasWritableSmtpPasswordProperty()
+//        {
+//            var value = "p@ssw0rd";
 
-            _options.SmtpPassword = value;
+//            _options.SmtpPassword = value;
 
-            Assert.Equal(value, _options.SmtpPassword);
-        }
+//            Assert.Equal(value, _options.SmtpPassword);
+//        }
 
-        [Fact]
-        public void ItHasWritableAddCCAddressesProperty()
-        {
-            var value = "value";
+//        [Fact]
+//        public void ItHasWritableAddCCAddressesProperty()
+//        {
+//            var value = "value";
 
-            _options.AddCCAddresses.Add(value);
+//            _options.AddCCAddresses.Add(value);
 
-            Assert.Equal(value, _options.AddCCAddresses.First());
-        }
+//            Assert.Equal(value, _options.AddCCAddresses.First());
+//        }
 
-        [Fact]
-        public void ItHasWritableSenderAddressProperty()
-        {
-            var value = "value";
+//        [Fact]
+//        public void ItHasWritableSenderAddressProperty()
+//        {
+//            var value = "value";
 
-            _options.SenderAddress = value;
+//            _options.SenderAddress = value;
 
-            Assert.Equal(value, _options.SenderAddress);
-        }
+//            Assert.Equal(value, _options.SenderAddress);
+//        }
 
-        [Fact]
-        public void ItHasWritableToAddressesProperty()
-        {
-            var value = "value";
+//        [Fact]
+//        public void ItHasWritableToAddressesProperty()
+//        {
+//            var value = "value";
 
-            _options.SenderDisplayName = value;
+//            _options.SenderDisplayName = value;
 
-            Assert.Equal(value, _options.SenderDisplayName);
-        }
+//            Assert.Equal(value, _options.SenderDisplayName);
+//        }
 
-        [Fact]
-        public void ItHasWritableTemplatePrefixProperty()
-        {
-            var value = "value";
+//        [Fact]
+//        public void ItHasWritableTemplatePrefixProperty()
+//        {
+//            var value = "value";
 
-            _options.TemplatePrefix = value;
+//            _options.TemplatePrefix = value;
 
-            Assert.Equal(value, _options.TemplatePrefix);
-        }
+//            Assert.Equal(value, _options.TemplatePrefix);
+//        }
 
-        [Fact]
-        public void ItHasWritableTemplateSuffixProperty()
-        {
-            var value = "value";
+//        [Fact]
+//        public void ItHasWritableTemplateSuffixProperty()
+//        {
+//            var value = "value";
 
-            _options.TemplateSuffix = value;
+//            _options.TemplateSuffix = value;
 
-            Assert.Equal(value, _options.TemplateSuffix);
-        }
-    }
-}
+//            Assert.Equal(value, _options.TemplateSuffix);
+//        }
+//    }
+//}

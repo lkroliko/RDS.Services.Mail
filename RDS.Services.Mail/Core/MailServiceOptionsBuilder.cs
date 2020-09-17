@@ -9,7 +9,7 @@ namespace RDS.Services.Mail
 {
     public class MailServiceOptionsBuilder
     {
-        internal IMailServiceOptions Options = MailService.Options;
+        internal MailServiceOptions Options = new MailServiceOptions();
 
         internal MailServiceOptionsBuilder() { }
 
@@ -40,7 +40,7 @@ namespace RDS.Services.Mail
 
         public MailServiceOptionsBuilder UseTemplates(Action<TemplateFactoryOptionsBuilder> options)
         {
-            options.Invoke(new TemplateFactoryOptionsBuilder());
+            options.Invoke(new TemplateFactoryOptionsBuilder(Options.Template));
             return this;
         }
 
@@ -61,6 +61,11 @@ namespace RDS.Services.Mail
         {
             options.Invoke(new MailMessageFillerOptionsBuilder());
             return this;
+        }
+
+        internal MailServiceOptions Build()
+        {
+            return Options;
         }
     }
 }

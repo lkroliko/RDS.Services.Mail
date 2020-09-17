@@ -13,11 +13,16 @@ namespace RDS.Services.Mail.Factory
 {
     public class TemplateFactory : ITemplateFactory
     {
-        public ITemplateFactoryOptions Options { get; set; } = MailService.Options.Template;
+        ITemplateFactoryOptions _options;
+
+        public TemplateFactory (ITemplateFactoryOptions options)
+        {
+            _options = options;
+        }
 
         public MailMessage Get(string name)
         {
-            return Copy(Options.GetPrototype(name));
+            return Copy(_options.GetPrototype(name));
         }
 
         private MailMessage Copy(IMailTemplate template)

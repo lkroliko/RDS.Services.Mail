@@ -1,8 +1,7 @@
 using MailServiceIntegrationTests.Fakes;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using Services.Mail;
+using RDS.Services.Mail;
 using System;
 using System.Configuration;
 using System.IO;

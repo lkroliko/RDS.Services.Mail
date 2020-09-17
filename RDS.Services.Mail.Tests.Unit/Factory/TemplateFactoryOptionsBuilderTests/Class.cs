@@ -10,24 +10,12 @@ namespace MailServiceTest.TemplateFactoryOptionsBuilderTests
     [Trait("Category","TemplateFactoryOptionsBuilder")]
     public class Class
     {
-        TemplateFactoryOptionsBuilder _builder = new TemplateFactoryOptionsBuilder();
+        ITemplateFactoryOptions _options = Mock.Of<ITemplateFactoryOptions>();
 
         [Fact]
         public void ItExists()
         {
-            TemplateFactoryOptionsBuilder builder = new TemplateFactoryOptionsBuilder();
-        }
-
-        [Fact]
-        public void ItHasOptionsProperty()
-        {
-            var options = _builder.Options;
-        }
-
-        [Fact]
-        public void OptionsPropertyImplementITemplateFactoryOptions()
-        {
-            Assert.IsAssignableFrom<ITemplateFactoryOptions>(_builder.Options);
+            TemplateFactoryOptionsBuilder builder = new TemplateFactoryOptionsBuilder(_options);
         }
     }
 }

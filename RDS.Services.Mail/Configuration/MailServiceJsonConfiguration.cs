@@ -17,33 +17,5 @@ namespace RDS.Services.Mail.Configuration
         public MailAddressConfig[] UseToAddresses { get; set; }
         public MailAddressConfig[] AddCCAddresses { get; set; }
         public TemplateConfig Template { get; set; }
-
-        public void Load()
-        {
-            MailService.Options.Sender.SmtpHost = SmtpHost;
-            MailService.Options.Sender.SmtpPort = SmtpPort;
-            if (string.IsNullOrEmpty(SmtpUserName) == false)
-                MailService.Options.Sender.SmtpCredential = new NetworkCredential(SmtpUserName, SmtpPassword);
-
-            if (string.IsNullOrEmpty(FromAddress) == false)
-                MailService.Options.Filler.UseFromAddress = new MailAddress(FromAddress, FromDisplayName);
-
-            if (UseToAddresses != null)
-                for (int i = 0; i < UseToAddresses.Length; i++)
-                {
-                    MailAddress address = new MailAddress(UseToAddresses[i].Address, UseToAddresses[i].Display);
-                    MailService.Options.Filler.UseToAddresses.Add(address);
-                }
-
-            if (AddCCAddresses != null)
-                for (int i = 0; i < AddCCAddresses.Length; i++)
-                {
-                    MailAddress address = new MailAddress(AddCCAddresses[i].Address, AddCCAddresses[i].Display);
-                    MailService.Options.Filler.AddCCAddresses.Add(address);
-                }
-
-            if (Template != null)
-                Template.Load();
-        }
     }
 }

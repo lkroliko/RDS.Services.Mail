@@ -20,7 +20,7 @@ namespace MailServiceTest.MailServiceOptionsTests
         public AddCCAddress(MailServiceOptionsFixture fixture)
         {
             _options = fixture.ServiceOptions;
-            _builder = new MailServiceOptionsBuilder() { Options = _options };
+            _builder = new MailServiceOptionsBuilder();
 
             Mock.Get(_options.Filler).Setup(o => o.AddCCAddresses).Returns(_addCCAddresses);
         }

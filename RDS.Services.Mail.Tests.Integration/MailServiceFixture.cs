@@ -1,7 +1,6 @@
 ﻿using MailServiceIntegrationTests.Fakes;
 using Microsoft.Extensions.DependencyInjection;
-using Services.Mail;
-using Services.Mail.Sender;
+using RDS.Services.Mail.Sender;
 using System;
 using System.Collections.Generic;
 using System.Linq;

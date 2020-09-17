@@ -9,24 +9,17 @@ using Xunit;
 namespace ServicesMailTest.Mail
 {
     [Trait("Category", "MailServiceOptionsBuilder")]
-    public class ConfigureFiller : IClassFixture<MailServiceOptionsFixture>
+    public class ConfigureFiller
     {
-        IMailServiceOptions _options;
-        MailServiceOptionsBuilder _builder;
-
-        public ConfigureFiller(MailServiceOptionsFixture fixture)
-        {
-            _options = fixture.ServiceOptions;
-            _builder = new MailServiceOptionsBuilder() { Options = _options };
-        }
+        MailServiceOptionsBuilder _builder = new MailServiceOptionsBuilder();
 
         [Fact]
         public void ItSetSettings()
         {
             _builder.ConfigureFiller("prefix", "suffix");
 
-            Assert.Equal("prefix", _options.Filler.Prefix);
-            Assert.Equal("suffix", _options.Filler.Suffix);
+            Assert.Equal("prefix", _builder.Options.Filler.Prefix);
+            Assert.Equal("suffix", _builder.Options.Filler.Suffix);
         }
     }
 }

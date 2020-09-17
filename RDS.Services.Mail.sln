@@ -3,13 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30503.244
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RDS.Services.Mail", "RDS.Services.Mail\RDS.Services.Mail.csproj", "{2B5AD260-F9F4-4F41-9928-2EC2EFCC1BB6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RDS.Services.Mail", "RDS.Services.Mail\RDS.Services.Mail.csproj", "{2B5AD260-F9F4-4F41-9928-2EC2EFCC1BB6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RDS.Services.Mail.Tests.Unit", "RDS.Services.Mail.Tests.Unit\RDS.Services.Mail.Tests.Unit.csproj", "{88B34043-B7BB-4F78-8BA7-A465141FD01E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RDS.Services.Mail.Tests.Unit", "RDS.Services.Mail.Tests.Unit\RDS.Services.Mail.Tests.Unit.csproj", "{88B34043-B7BB-4F78-8BA7-A465141FD01E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RDS.Services.Mail.Tests.Integration", "RDS.Services.Mail.Tests.Integration\RDS.Services.Mail.Tests.Integration.csproj", "{19F6A7E7-4FE7-4413-A2D0-80DDFEE0949C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RDS.Services.Mail.Tests.EndToEnd", "RDS.Services.Mail.Tests.EndToEnd\RDS.Services.Mail.Tests.EndToEnd.csproj", "{4F8D0643-D66D-4B7B-A099-1CDFF2863EE4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +27,6 @@ Global
 		{19F6A7E7-4FE7-4413-A2D0-80DDFEE0949C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{19F6A7E7-4FE7-4413-A2D0-80DDFEE0949C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{19F6A7E7-4FE7-4413-A2D0-80DDFEE0949C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4F8D0643-D66D-4B7B-A099-1CDFF2863EE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4F8D0643-D66D-4B7B-A099-1CDFF2863EE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4F8D0643-D66D-4B7B-A099-1CDFF2863EE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4F8D0643-D66D-4B7B-A099-1CDFF2863EE4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

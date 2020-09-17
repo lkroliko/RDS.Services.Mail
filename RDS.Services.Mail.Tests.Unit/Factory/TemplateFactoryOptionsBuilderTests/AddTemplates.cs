@@ -12,14 +12,14 @@ namespace RDS.Services.Mail.Tests.Unit.Factory.TemplateFactoryOptionsBuilderTest
     [Trait("Category", "TemplateFactoryOptionsBuilder")]
     public class AddTemplates
     {
-        ITemplateFactoryOptions _options;
+        ITemplateFactoryOptions _options = Mock.Of<ITemplateFactoryOptions>();
         TemplateFactoryOptionsBuilder _builder;
         ConcurrentDictionary<string, IMailTemplate> _templates = new ConcurrentDictionary<string, IMailTemplate>();
 
         public AddTemplates()
         {
             _options = Mock.Of<ITemplateFactoryOptions>();
-            _builder = new TemplateFactoryOptionsBuilder() { Options = _options };
+            _builder = new TemplateFactoryOptionsBuilder(_options);
         }
 
         [Fact]

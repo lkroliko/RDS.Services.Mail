@@ -32,7 +32,7 @@ namespace ServicesMailTest.Mail
             _templates[_template.Name] = _template;
             Mock.Get(_options).Setup(o => o.GetPrototype(It.IsAny<string>()))
                 .Returns<string>(n => _templates[n]);
-            _factory = new TemplateFactory() { Options = _options };
+            _factory = new TemplateFactory(_options);
         }
 
         [Fact]

@@ -18,7 +18,7 @@ namespace RDS.Services.Mail.Tests.Unit.Filler.MailMessageFillerOptionsBuilderTes
         public AddVariable(MailServiceOptionsFixture fixture)
         {
             _options = fixture.FillerOptions;
-            _builder = new MailMessageFillerOptionsBuilder() { Options = _options };
+            _builder = new MailMessageFillerOptionsBuilder();
             Mock.Get(_options).Setup(o => o.Variables).Returns(_variables);
         }
 

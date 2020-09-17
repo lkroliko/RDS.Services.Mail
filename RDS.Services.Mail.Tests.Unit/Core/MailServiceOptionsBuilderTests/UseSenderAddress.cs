@@ -16,7 +16,7 @@ namespace MailServiceTest.MailServiceOptionsTests
         public UseSenderAddress(MailServiceOptionsFixture fixture)
         {
             _options = fixture.ServiceOptions;
-            _builder = new MailServiceOptionsBuilder() { Options = _options };
+            _builder = new MailServiceOptionsBuilder();
         }
 
         [Fact]

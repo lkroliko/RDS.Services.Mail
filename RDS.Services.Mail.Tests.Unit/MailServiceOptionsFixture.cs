@@ -18,7 +18,6 @@ namespace RDS.Services.Mail.Tests.Unit
 
         public MailServiceOptionsFixture()
         {
-            MailService.Options = ServiceOptions = Mock.Of<IMailServiceOptions>();
             FillerOptions = Mock.Of<IMailMessageFillerOptions>();
             SenderOptions = Mock.Of<IMailSenderOptions>();
             TemplateOptions = Mock.Of<ITemplateFactoryOptions>();

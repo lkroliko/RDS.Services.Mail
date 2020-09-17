@@ -10,27 +10,17 @@ using Xunit;
 namespace MailServiceTest.MailServiceOptionsTests
 {
     [Trait("Category", "MailServiceOptionsBuilder")]
-    public class UseRecipientAddress : IClassFixture<MailServiceOptionsFixture>
+    public class UseRecipientAddress
     {
-        IMailServiceOptions _options;
-        MailServiceOptionsBuilder _builder;
-        List<MailAddress> _recipientAddresses = new List<MailAddress>();
-
-        public UseRecipientAddress(MailServiceOptionsFixture fixture)
-        {
-            _options = fixture.ServiceOptions;
-            _builder = new MailServiceOptionsBuilder() { Options = _options };
-        }
+        MailServiceOptionsBuilder _builder = new MailServiceOptionsBuilder();
 
         [Fact]
         public void GivenMailAddressesThenOptionsSeted()
         {
-            Mock.Get(_options.Filler).Setup(o => o.UseToAddresses).Returns(_recipientAddresses);
-
             _builder.UseRecipientAddress("recipient@host.local", "Display");
 
-            Assert.Equal("recipient@host.local", _recipientAddresses[0].Address);
-            Assert.Equal("Display", _recipientAddresses[0].DisplayName);
+            Assert.Equal("recipient@host.local", _builder.Options.Filler.UseToAddresses[0].Address);
+            Assert.Equal("Display", _builder.Options.Filler.UseToAddresses[0].DisplayName);
         }
     }
 }

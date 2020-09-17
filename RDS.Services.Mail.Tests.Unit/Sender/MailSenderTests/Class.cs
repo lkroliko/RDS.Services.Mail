@@ -10,30 +10,12 @@ namespace RDS.Services.Mail.Tests.Unit.MailSenderTests
     [Trait("Category","MailSender")]
     public class Class
     {
-        MailSender _sender = new MailSender();
+        IMailSenderOptions _options = Mock.Of<IMailSenderOptions>();
 
         [Fact]
         public void ItExists()
         {
-            MailSender sender = new MailSender();
-        }
-
-        [Fact]
-        public void ItHasOptionsProperty()
-        {
-            var options = _sender.Options;
-        }
-
-        [Fact]
-        public void StaticPropertyIsNotNull()
-        {
-            Assert.NotNull(_sender.Options);
-        }
-
-        [Fact]
-        public void OptionsPropertyImplementIMailSenderOptions()
-        {
-            Assert.IsAssignableFrom<IMailSenderOptions>(_sender.Options);
+            MailSender sender = new MailSender(_options);
         }
     }
 }

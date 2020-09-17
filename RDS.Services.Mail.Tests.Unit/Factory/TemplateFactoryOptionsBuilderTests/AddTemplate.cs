@@ -9,16 +9,15 @@ using Xunit;
 namespace RDS.Services.Mail.Tests.Unit.Factory.TemplateFactoryOptionsBuilderTests
 {
     [Trait("Category", "TemplateFactoryOptionsBuilder")]
-    public class AddTemplate : IClassFixture<MailServiceOptionsFixture>
+    public class AddTemplate
     {
-        ITemplateFactoryOptions _options;
+        ITemplateFactoryOptions _options = Mock.Of<ITemplateFactoryOptions>();
         TemplateFactoryOptionsBuilder _builder;
         ConcurrentDictionary<string, IMailTemplate> _templates = new ConcurrentDictionary<string, IMailTemplate>();
 
-        public AddTemplate(MailServiceOptionsFixture fixture)
+        public AddTemplate()
         {
-            _options = fixture.TemplateOptions;
-            _builder = new TemplateFactoryOptionsBuilder() { Options = _options };
+            _builder = new TemplateFactoryOptionsBuilder(_options);
             Mock.Get(_options).Setup(o => o.GetPrototype(It.IsAny<string>()))
                 .Returns((string name) => _templates[name]);
             Mock.Get(_options).Setup(o => o.AddPrototype(It.IsAny<IMailTemplate>()))

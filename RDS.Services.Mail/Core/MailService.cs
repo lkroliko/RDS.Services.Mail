@@ -8,7 +8,6 @@ namespace RDS.Services.Mail
 {
     public class MailService : IMailService
     {
-        internal static IMailServiceOptions Options = new MailServiceOptions();
         ITemplateFactory _factory;
         IMailMessageFiller _filler;
         IMailSender _sender;
