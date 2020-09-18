@@ -8,15 +8,13 @@ using Xunit;
 namespace MailServiceTest.MailServiceOptionsTests
 {
     [Trait("Category", "MailServiceOptionsBuilder")]
-    public class UseSmtpServer : IClassFixture<MailServiceOptionsFixture>
+    public class UseSmtpServer
     {
-        IMailServiceOptions _options;
         MailServiceOptionsBuilder _builder;
 
-        public UseSmtpServer(MailServiceOptionsFixture fixture)
+        public UseSmtpServer()
         {
-            _options = fixture.ServiceOptions;
-            _builder = new MailServiceOptionsBuilder() { Options = _options };
+            _builder = new MailServiceOptionsBuilder();
         }
 
         [Fact]
@@ -24,8 +22,8 @@ namespace MailServiceTest.MailServiceOptionsTests
         {
             _builder.UseSmtpServer("host", 123);
 
-            Assert.Equal("host", _options.Sender.SmtpHost);
-            Assert.Equal(123, _options.Sender.SmtpPort);
+            Assert.Equal("host", _builder.Options.Sender.SmtpHost);
+            Assert.Equal(123, _builder.Options.Sender.SmtpPort);
         }
     }
 }

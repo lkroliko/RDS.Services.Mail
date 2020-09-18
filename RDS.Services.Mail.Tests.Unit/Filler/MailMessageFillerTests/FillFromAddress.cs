@@ -9,19 +9,18 @@ using Xunit;
 namespace RDS.Services.Mail.Tests.Unit.Filler.MailMessageFillerTests
 {
     [Trait("Category", "MailMessageFiller")]
-    public class FillFromAddress : IClassFixture<MailServiceOptionsFixture>
+    public class FillFromAddress
     {
         IMailMessageFiller _filler;
-        IMailMessageFillerOptions _options;
+        IMailMessageFillerOptions _options = Mock.Of<IMailMessageFillerOptions>();
         MailMessage _message;
         MailAddress _from;
 
-        public FillFromAddress(MailServiceOptionsFixture fixture)
+        public FillFromAddress()
         {
             _from = new MailAddress("from@host.local");
             _message = new MailMessage();
-            _options = fixture.FillerOptions;
-            _filler = new MailMessageFiller() { Options = _options };
+            _filler = new MailMessageFiller(_options);
 
             Mock.Get(_options).Setup(o => o.UseFromAddress).Returns(_from);
         }

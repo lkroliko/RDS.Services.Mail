@@ -9,20 +9,17 @@ using Xunit;
 namespace RDS.Services.Mail.Tests.Unit.MailServiceTests
 {
     [Trait("Category", "MailService")]
-    public class GetTemplate : IClassFixture<MailServiceOptionsFixture>
+    public class GetTemplate
     {
         IMailService _service;
-        IMailServiceOptions _options;
-        ITemplateFactory _factory;
+        ITemplateFactory _factory = Mock.Of<ITemplateFactory>();
         MailMessage _template;
-        public GetTemplate(MailServiceOptionsFixture fixture)
+
+        public GetTemplate()
         {
             _template = new MailMessage();
-            _options = fixture.ServiceOptions;
-            _factory = Mock.Of<ITemplateFactory>();
-            _service = new MailService(_factory, null, null);
-
-            Mock.Get(_factory).Setup(f => f.Get(It.IsAny<string>())).Returns(_template);
+            Mock.Get(_factory).Setup(f => f.Get(It.IsAny<string>())).Returns(_template);         
+            _service = new MailService(_factory, null, null);            
         }
 
         [Fact]
@@ -34,9 +31,9 @@ namespace RDS.Services.Mail.Tests.Unit.MailServiceTests
         [Fact]
         public void GivenTemplateNameThenMailMessageReturned()
         {
-            var actual = _service.GetTemplate("name");
+            var result = _service.GetTemplate("name");
 
-            Assert.Same(_template, actual);
+            Assert.Same(_template, result);
         }
     }
 }

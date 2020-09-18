@@ -10,30 +10,12 @@ namespace RDS.Services.Mail.Tests.Unit.TemplateFactoryTests
     [Trait("Category", "TemplateFactory")]
     public class Class
     {
-        TemplateFactory _factory = new TemplateFactory();
+        ITemplateFactoryOptions _options = Mock.Of<ITemplateFactoryOptions>();
 
         [Fact]
         public void ItExists()
         {
-            TemplateFactory factory = new TemplateFactory();
-        }
-
-        [Fact]
-        public void ItHasOptionsProperty()
-        {
-            var options = _factory.Options;
-        }
-
-        [Fact]
-        public void OptionsPropertyIsNotNull()
-        {
-            Assert.NotNull(_factory);
-        }
-
-        [Fact]
-        public void OptionsPropertyImplementITemplateFactoryOptions()
-        {
-            Assert.IsAssignableFrom<ITemplateFactoryOptions>(_factory.Options);
+            TemplateFactory factory = new TemplateFactory(_options);
         }
     }
 }

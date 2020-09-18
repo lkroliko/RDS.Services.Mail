@@ -10,24 +10,12 @@ namespace MailServiceTest.MailMessageFillerTests
     [Trait("Category", "MailMessageFiller")]
     public class Class
     {
-        MailMessageFiller _filler = new MailMessageFiller();
+        IMailMessageFillerOptions options = Mock.Of<IMailMessageFillerOptions>();
 
         [Fact]
         public void ItExists()
         {
-            MailMessageFiller filler = new MailMessageFiller();
-        }
-
-        [Fact]
-        public void ItHasOptionProperty()
-        {
-            var options = _filler.Options;
-        }
-
-        [Fact]
-        public void OptionPropertyIsNotNull()
-        {
-            Assert.NotNull(_filler.Options);
+            MailMessageFiller filler = new MailMessageFiller(options);
         }
     }
 }

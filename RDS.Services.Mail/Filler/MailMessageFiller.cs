@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Net.Mail;
 using System.Reflection;
@@ -8,12 +7,18 @@ using System.Text.RegularExpressions;
 using System.Linq;
 using System.Data;
 using System.Xml.Serialization;
+using System.Runtime.InteropServices.ComTypes;
 
 namespace RDS.Services.Mail.Filler
 {
     public class MailMessageFiller : IMailMessageFiller
     {
-        public IMailMessageFillerOptions Options = MailService.Options.Filler;
+        IMailMessageFillerOptions _options;
+
+        public MailMessageFiller(IMailMessageFillerOptions options)
+        {
+            _options = options;
+        }
 
         public void Fill(MailMessage message)
         {
@@ -49,8 +54,8 @@ namespace RDS.Services.Mail.Filler
         private string FillWithVariables(string template)
         {
             foreach (Match match in Regex.Matches(template, GetPattern()))
-                if (Options.Variables.ContainsKey(match.Value))
-                    template = template.Replace(match.Value, Options.Variables[match.Value]);
+                if (_options.Variables.ContainsKey(match.Value))
+                    template = template.Replace(match.Value, _options.Variables[match.Value]);
 
             return template;
         }
@@ -72,7 +77,7 @@ namespace RDS.Services.Mail.Filler
 
         private string Replace(string template, PropertyInfo propertyInfo, object model)
         {
-            return template.Replace($"{Options.Prefix}{propertyInfo.Name}{Options.Suffix}",
+            return template.Replace($"{_options.Prefix}{propertyInfo.Name}{_options.Suffix}",
                 GetValue(propertyInfo, model).ToString());
         }
 
@@ -83,37 +88,37 @@ namespace RDS.Services.Mail.Filler
 
         private void ReplaceFromAddress(MailMessage message)
         {
-            if (Options.UseFromAddress != null)
-                message.From = Options.UseFromAddress;
+            if (_options.UseFromAddress != null)
+                message.From = _options.UseFromAddress;
         }
 
         private void ReplaceToAddresses(MailMessage message)
         {
-            if (Options.UseToAddresses != null && Options.UseToAddresses.Count > 0)
+            if (_options.UseToAddresses != null && _options.UseToAddresses.Count > 0)
             {
                 message.To.Clear();
-                foreach (MailAddress address in Options.UseToAddresses)
+                foreach (MailAddress address in _options.UseToAddresses)
                     message.To.Add(address);
             }
         }
 
         private void AddCCAddresses(MailMessage message)
         {
-            foreach (var address in Options.AddCCAddresses)
+            foreach (var address in _options.AddCCAddresses)
                 message.CC.Add(address);
         }
 
         private string GetPattern()
         {
-            return $"{Options.Prefix}\\w*{Options.Suffix}";
+            return $"{_options.Prefix}\\w*{_options.Suffix}";
         }
 
         private string RemovePrefixAndSuffix(string value)
         {
             return value.Substring(
-                Options.Prefix.Length, value.Length
-                - Options.Suffix.Length
-                - Options.Prefix.Length);
+                _options.Prefix.Length, value.Length
+                - _options.Suffix.Length
+                - _options.Prefix.Length);
         }
     }
 }

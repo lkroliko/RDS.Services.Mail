@@ -11,27 +11,17 @@ using Xunit;
 namespace MailServiceTest.MailServiceOptionsTests
 {
     [Trait("Category", "MailServiceOptionsBuilder")]
-    public class AddCCAddress : IClassFixture<MailServiceOptionsFixture>
+    public class AddCCAddress
     {
-        IMailServiceOptions _options;
-        MailServiceOptionsBuilder _builder;
-        List<MailAddress> _addCCAddresses = new List<MailAddress>();
-
-        public AddCCAddress(MailServiceOptionsFixture fixture)
-        {
-            _options = fixture.ServiceOptions;
-            _builder = new MailServiceOptionsBuilder() { Options = _options };
-
-            Mock.Get(_options.Filler).Setup(o => o.AddCCAddresses).Returns(_addCCAddresses);
-        }
+        MailServiceOptionsBuilder _builder = new MailServiceOptionsBuilder();
 
         [Fact]
         public void ItSetSettings()
         {
-            _builder.AddCCAddress("test@host.local","display");
+            IMailServiceOptions result = _builder.AddCCAddress("test@host.local","display").Build();
 
-            Assert.Equal("test@host.local", _addCCAddresses[0].Address);
-            Assert.Equal("display", _addCCAddresses[0].DisplayName);
+            Assert.Equal("test@host.local", result.Filler.AddCCAddresses[0].Address);
+            Assert.Equal("display", result.Filler.AddCCAddresses[0].DisplayName);
         }
     }
 }

@@ -10,7 +10,12 @@ namespace RDS.Services.Mail.Sender
 {
     public class MailSender : IMailSender
     {
-        public IMailSenderOptions Options { get; set; } = MailService.Options.Sender;
+        IMailSenderOptions _options;
+
+        public MailSender(IMailSenderOptions options)
+        {
+            _options = options;
+        }
 
         public void Send(MailMessage message)
         {
@@ -30,9 +35,9 @@ namespace RDS.Services.Mail.Sender
 
         internal SmtpClient CreateClient()
         {
-            SmtpClient client = new SmtpClient(Options.SmtpHost, Options.SmtpPort);
-            if (Options.SmtpCredential != null)
-                client.Credentials = Options.SmtpCredential;
+            SmtpClient client = new SmtpClient(_options.SmtpHost, _options.SmtpPort);
+            if (_options.SmtpCredential != null)
+                client.Credentials = _options.SmtpCredential;
             return client;
         }
     }

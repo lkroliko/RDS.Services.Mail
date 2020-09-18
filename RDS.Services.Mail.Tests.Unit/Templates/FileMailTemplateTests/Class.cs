@@ -49,12 +49,6 @@ namespace MailServiceTest.FileMailTemplateTests
         }
 
         [Fact]
-        public void ItInheritFromMailMessage()
-        {
-            Assert.Equal(typeof(MailTemplate), _template.GetType().BaseType);
-        }
-
-        [Fact]
         public void ItHasPathWritableProperty()
         {
             _template.Path = _correctPath;

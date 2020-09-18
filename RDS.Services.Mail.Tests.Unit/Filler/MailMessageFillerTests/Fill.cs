@@ -15,36 +15,35 @@ using Xunit.Sdk;
 namespace MailServiceTest.MailMessageFillerTests
 {
     [Trait("Category", "MailMessageFiller")]
-    public class Fill : IClassFixture<MailServiceOptionsFixture>
+    public class Fill
     {
-        IMailServiceOptions _options;
-        IMailMessageFiller _filler;
+        IMailMessageFillerOptions _options = Mock.Of<IMailMessageFillerOptions>();
+        MailMessageFiller _filler;
         List<MailAddress> _addCCAddresses = new List<MailAddress>();
         List<MailAddress> _useToAddresses = new List<MailAddress>();
 
-        public Fill(MailServiceOptionsFixture fixture)
+        public Fill()
         {
-            _options = fixture.ServiceOptions;
-            Mock.Get(_options).Setup(o => o.Filler.Prefix).Returns("<%");
-            Mock.Get(_options).Setup(o => o.Filler.Suffix).Returns("%>");
-            Mock.Get(_options).Setup(o => o.Filler.Variables).Returns(new ConcurrentDictionary<string, string>());
+            Mock.Get(_options).Setup(o => o.Prefix).Returns("<%");
+            Mock.Get(_options).Setup(o => o.Suffix).Returns("%>");
+            Mock.Get(_options).Setup(o => o.Variables).Returns(new ConcurrentDictionary<string, string>());
 
             _addCCAddresses.Add(new MailAddress("cc1@local.test"));
             _addCCAddresses.Add(new MailAddress("cc2@local.test"));
-            Mock.Get(_options).Setup(o => o.Filler.AddCCAddresses).Returns(_addCCAddresses);
+            Mock.Get(_options).Setup(o => o.AddCCAddresses).Returns(_addCCAddresses);
 
             _useToAddresses.Add(new MailAddress("to1@local.test"));
             _useToAddresses.Add(new MailAddress("to2@local.test"));
-            Mock.Get(_options).Setup(o => o.Filler.UseToAddresses).Returns(_useToAddresses);
+            Mock.Get(_options).Setup(o => o.UseToAddresses).Returns(_useToAddresses);
 
-            _filler = new MailMessageFiller() { Options = _options.Filler };
+            _filler = new MailMessageFiller(_options);
         }
 
         [Fact]
         public void GivenMessageThenFromAddressAdded()
         {
             MailAddress expected = new MailAddress("from@host.local");
-            Mock.Get(_options).Setup(o => o.Filler.UseFromAddress).Returns(expected);
+            Mock.Get(_options).Setup(o => o.UseFromAddress).Returns(expected);
             MailMessage message = new MailMessage();
 
             _filler.Fill(message);
@@ -87,8 +86,8 @@ namespace MailServiceTest.MailMessageFillerTests
         [InlineData("><a href=\"https://<%TMP%>/Evaluation/Create/<%Id%>\"", "localhost", "><a href=\"https://localhost/Evaluation/Create/<%Id%>\"")]
         public void GivenMessageThenMessageBodyFilledWithVariables(string body, string variable, string expected)
         {
-            _options.Filler.Variables.Clear();
-            _options.Filler.Variables["<%TMP%>"] = variable;
+            _options.Variables.Clear();
+            _options.Variables["<%TMP%>"] = variable;
             MailMessage message = new MailMessage() { Body = body };
 
             _filler.Fill(message);
@@ -100,8 +99,8 @@ namespace MailServiceTest.MailMessageFillerTests
         [InlineData("Mail <%TMP%> subject", "tmp value", "Mail tmp value subject")]
         public void GivenMessageThenMessageSubjectFilledWithVariables(string subject, string variable, string expected)
         {
-            _options.Filler.Variables.Clear();
-            _options.Filler.Variables["<%TMP%>"] = variable;
+            _options.Variables.Clear();
+            _options.Variables["<%TMP%>"] = variable;
             MailMessage message = new MailMessage() { Subject = subject };
 
             _filler.Fill(message);
@@ -113,7 +112,7 @@ namespace MailServiceTest.MailMessageFillerTests
         public void GivenMessageThenFromAddressReplaced()
         {
             MailAddress expected = new MailAddress("from@host.local");
-            Mock.Get(_options).Setup(o => o.Filler.UseFromAddress).Returns(expected);
+            Mock.Get(_options).Setup(o => o.UseFromAddress).Returns(expected);
             MailMessage message = new MailMessage() { From = new MailAddress("bad@host.local") };
             
             _filler.Fill(message);
@@ -125,7 +124,7 @@ namespace MailServiceTest.MailMessageFillerTests
         public void GivenMessageThenFromAddressNotReplaced()
         {
             MailAddress expected = new MailAddress("message@host.local");
-            Mock.Get(_options).Setup(o => o.Filler.UseFromAddress).Returns((MailAddress)null);
+            Mock.Get(_options).Setup(o => o.UseFromAddress).Returns((MailAddress)null);
             MailMessage message = new MailMessage() { From = expected };
 
             _filler.Fill(message);
@@ -161,7 +160,7 @@ namespace MailServiceTest.MailMessageFillerTests
         [Fact]
         public void GivenMessageThenToAddressNotReplacd()
         {
-            Mock.Get(_options).Setup(o => o.Filler.UseToAddresses).Returns(new List<MailAddress>());
+            Mock.Get(_options).Setup(o => o.UseToAddresses).Returns(new List<MailAddress>());
                 MailMessage message = new MailMessage();
             MailAddress to = new MailAddress("to@host.local");
             message.To.Add(to);

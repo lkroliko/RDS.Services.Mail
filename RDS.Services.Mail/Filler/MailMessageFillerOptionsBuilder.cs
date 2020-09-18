@@ -6,12 +6,27 @@ namespace RDS.Services.Mail.Filler
 {
     public class MailMessageFillerOptionsBuilder
     {
-        internal IMailMessageFillerOptions Options = MailService.Options.Filler;
+        MailMessageFillerOptions _options;
+
+        public MailMessageFillerOptionsBuilder()
+        {
+            _options = new MailMessageFillerOptions();
+        }
 
         public MailMessageFillerOptionsBuilder AddVariable(string name, string value)
         {
-            Options.Variables[name] = value;
+            _options.Variables[name] = value;
             return this;
+        }
+
+        internal MailMessageFillerOptions Build()
+        {
+            return _options;
+        }
+
+        public static implicit operator MailMessageFillerOptions(MailMessageFillerOptionsBuilder builder)
+        {
+            return builder.Build();
         }
     }
 }

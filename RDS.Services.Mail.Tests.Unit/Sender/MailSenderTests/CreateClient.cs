@@ -9,15 +9,14 @@ using Xunit;
 namespace RDS.Services.Mail.Tests.Unit.MailSenderTests
 {
     [Trait("Category", "MailSender")]
-    public class CreateClient : IClassFixture<MailServiceOptionsFixture>
+    public class CreateClient
     {
-        IMailSenderOptions _options;
+        IMailSenderOptions _options = Mock.Of<IMailSenderOptions>();
         MailSender _sender;
 
-        public CreateClient(MailServiceOptionsFixture fixture)
+        public CreateClient()
         {
-            _options = fixture.SenderOptions;
-            _sender = new MailSender() { Options = _options };
+            _sender = new MailSender(_options);
         }
 
         [Fact]

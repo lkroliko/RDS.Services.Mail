@@ -8,16 +8,22 @@ using System.Text;
 
 namespace RDS.Services.Mail
 {
-    public class FileMailTemplate : MailTemplate
+    public class FileMailTemplate : IFileMailTemplate 
     {
         IFileSystem _fileSystem;
         private string _body;
-        public override string Body { get { return _body ?? ReadFile(); } }     
+        public string Body { get { return _body ?? ReadFile(); } set { _body = value; } }
         private string _path;
         public string Path { get { return _path; } set { _path = ValidatePath(value); } }
         public bool StoreInMemory { get; set; }
+        public string Name { get; set; }
+        public string Subject { get; set; }
+        public bool IsBodyHtml { get; set; }
 
-        public FileMailTemplate() : this(new FileSystem()) { }
+        public FileMailTemplate()
+        {
+            _fileSystem = new FileSystem();
+        }
 
         internal FileMailTemplate(IFileSystem fileSystem)
         {
