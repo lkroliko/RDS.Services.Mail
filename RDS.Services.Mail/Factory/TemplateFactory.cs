@@ -22,10 +22,10 @@ namespace RDS.Services.Mail.Factory
 
         public MailMessage Get(string name)
         {
-            return Copy(_options.GetPrototype(name));
+            return Create(_options.GetPrototype(name));
         }
 
-        private MailMessage Copy(IMailTemplate template)
+        private MailMessage Create(IMailTemplate template)
         {
             return new MailMessage()
             {

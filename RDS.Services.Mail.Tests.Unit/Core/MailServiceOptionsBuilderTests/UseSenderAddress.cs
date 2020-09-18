@@ -8,24 +8,17 @@ using Xunit;
 namespace MailServiceTest.MailServiceOptionsTests
 {
     [Trait("Category", "MailServiceOptionsBuilder")]
-    public class UseSenderAddress : IClassFixture<MailServiceOptionsFixture>
+    public class UseSenderAddress
     {
-        IMailServiceOptions _options;
-        MailServiceOptionsBuilder _builder;
-
-        public UseSenderAddress(MailServiceOptionsFixture fixture)
-        {
-            _options = fixture.ServiceOptions;
-            _builder = new MailServiceOptionsBuilder();
-        }
+        MailServiceOptionsBuilder _builder = new MailServiceOptionsBuilder();
 
         [Fact]
         public void ItSetSettings()
         {
-            _builder.UseSenderAddress("sender@host.local", "display");
+            var result = _builder.UseSenderAddress("sender@host.local", "display").Build();
 
-            Assert.Equal("sender@host.local", _options.Filler.UseFromAddress.Address);
-            Assert.Equal("display", _options.Filler.UseFromAddress.DisplayName);
+            Assert.Equal("sender@host.local", result.Filler.UseFromAddress.Address);
+            Assert.Equal("display", result.Filler.UseFromAddress.DisplayName);
         }
     }
 }

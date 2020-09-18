@@ -35,17 +35,18 @@ namespace MailServiceIntegrationTests
         [InlineData("Template 1")]
         [InlineData("Template 2")]
         [InlineData("Template 3")]
-        public void Test1(string templateName)
+        public void GivenTemoplateNameThenMailMessageReturnedAndSended(string templateName)
         {
             IMailService service = _serviceProvider.GetRequiredService<IMailService>();
+            
             MailMessage message = service.GetTemplate(templateName);
-
             service.Send(message);
-            MailMessage actual = _fixture.Sender.Sended.First();
-            Assert.Equal(message, actual);
-            Assert.Equal(templateName, actual.Body);
-            Assert.Equal("from@host.local", actual.From.Address);
-            Assert.Equal("From", actual.From.DisplayName);
+
+            MailMessage result = _fixture.Sender.Sended.Where(m=>m.Body == templateName).First();
+            Assert.Equal(message, result);
+            Assert.Equal(templateName, result.Body);
+            Assert.Equal("from@host.local", result.From.Address);
+            Assert.Equal("From", result.From.DisplayName);
         }
     }
 }

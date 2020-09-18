@@ -14,9 +14,8 @@ namespace RDS.Services.Mail.Tests.Unit.MailSenderTests
         IMailSenderOptions _options = Mock.Of<IMailSenderOptions>();
         MailSender _sender;
 
-        public CreateClient(MailServiceOptionsFixture fixture)
+        public CreateClient()
         {
-            _options = fixture.SenderOptions;
             _sender = new MailSender(_options);
         }
 

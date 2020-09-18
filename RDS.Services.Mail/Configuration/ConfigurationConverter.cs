@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RDS.Services.Mail.Templates;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -11,6 +12,12 @@ namespace RDS.Services.Mail.Configuration
     {
         MailServiceOptions _options;
         MailServiceJsonConfiguration _jsonOptions;
+        IMailTemplateFactory _mailTemplateFactory;
+
+        public ConfigurationConverter(IMailTemplateFactory mailTemplateFactory)
+        {
+            _mailTemplateFactory = mailTemplateFactory;
+        }
 
         public MailServiceOptions Convert(MailServiceJsonConfiguration jsonOptions)
         {
@@ -52,16 +59,16 @@ namespace RDS.Services.Mail.Configuration
 
         public virtual void LoadTemplateOptions()
         {
-            if (string.IsNullOrEmpty(_jsonOptions.Template.Prefix) == false)
+            if (string.IsNullOrEmpty(_jsonOptions.Template?.Prefix) == false)
                 _options.Filler.Prefix = _jsonOptions.Template.Prefix;
 
-            if (string.IsNullOrEmpty(_jsonOptions.Template.Suffix) == false)
+            if (string.IsNullOrEmpty(_jsonOptions.Template?.Suffix) == false)
                 _options.Filler.Suffix = _jsonOptions.Template.Suffix;
 
-            if (_jsonOptions.Template.Variables != null)
+            if (_jsonOptions.Template?.Variables != null)
                 _jsonOptions.Template.Variables.ToList().ForEach(v => _options.Filler.Variables[v.Name] = v.Value);
 
-            if (_jsonOptions.Template.MailTemplates != null)
+            if (_jsonOptions.Template?.MailTemplates != null)
                 _jsonOptions.Template.MailTemplates.ToList().ForEach(t =>
                 {
                     if (string.IsNullOrEmpty(t.Path))
@@ -73,27 +80,22 @@ namespace RDS.Services.Mail.Configuration
 
         private void LoadFileMailTemplate(MailTemplateConfig mailTemplateConfig)
         {
-            FileMailTemplate template = new FileMailTemplate()
-            {
-                IsBodyHtml = mailTemplateConfig.IsBodyHtml,
-                Name = mailTemplateConfig.Name,
-                Path = mailTemplateConfig.Path,
-                Subject = mailTemplateConfig.Subject
-            };
-
+            IFileMailTemplate template = _mailTemplateFactory.GetFileMailTemplate();
+            template.IsBodyHtml = mailTemplateConfig.IsBodyHtml;
+            template.Name = mailTemplateConfig.Name;
+            template.Path = mailTemplateConfig.Path;
+            template.Subject = mailTemplateConfig.Subject;
             _options.Template.AddPrototype(template);
         }
 
         private void LoadMailTemplate(MailTemplateConfig mailTemplateConfig)
         {
-            MailTemplate template = new MailTemplate()
-            {
-                IsBodyHtml = mailTemplateConfig.IsBodyHtml,
-                Name = mailTemplateConfig.Name,
-                Subject = mailTemplateConfig.Subject,
-                Body = mailTemplateConfig.Body
-            };
+            IMailTemplate template = _mailTemplateFactory.GetMailTemplate();
 
+            template.IsBodyHtml = mailTemplateConfig.IsBodyHtml;
+            template.Name = mailTemplateConfig.Name;
+            template.Subject = mailTemplateConfig.Subject;
+            template.Body = mailTemplateConfig.Body;
             _options.Template.AddPrototype(template);
         }
     }

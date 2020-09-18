@@ -12,6 +12,7 @@ namespace MailServiceIntegrationTests
     {
         public IServiceCollection Services = new ServiceCollection();
         public MailSenderFake Sender = new MailSenderFake();
+
         public void AddFakeSender()
         {
             var serviceDescription = Services.First(s => s.ImplementationType == typeof(MailSender));

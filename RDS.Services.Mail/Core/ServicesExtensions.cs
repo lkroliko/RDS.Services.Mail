@@ -4,6 +4,7 @@ using RDS.Services.Mail.Configuration;
 using RDS.Services.Mail.Factory;
 using RDS.Services.Mail.Filler;
 using RDS.Services.Mail.Sender;
+using RDS.Services.Mail.Templates;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.ComTypes;
@@ -18,7 +19,7 @@ namespace RDS.Services.Mail
         {
             MailServiceJsonConfiguration jsonConfiguration = new MailServiceJsonConfiguration();
             configuration.Bind("MailService", jsonConfiguration);
-            var converter = new ConfigurationConverter();
+            var converter = new ConfigurationConverter(new MailTemplateFactory());
             var options = converter.Convert(jsonConfiguration);
             AddService(services, options);
         }

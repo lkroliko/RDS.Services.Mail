@@ -15,21 +15,6 @@ namespace MailServiceTest.ServiceExtensionsTests
     [Trait("Category", "ServiceExtensions")]
     public class AddMail
     {
-        [Fact (Skip = "how to test it?")]
-        public void GivenConfigurationThenServicesCreated()
-        {
-            IServiceCollection services = new ServiceCollection();
-            IConfiguration configuration = Mock.Of<IConfiguration>();
-            Mock.Get(configuration).Setup(c => c.Bind(It.IsAny<string>(), It.IsAny<object>()));
-            services.AddMail(configuration);
-
-            ServiceProvider serviceProvider = services.BuildServiceProvider();
-            Assert.NotNull(serviceProvider.GetRequiredService<IMailService>());
-            Assert.NotNull(serviceProvider.GetRequiredService<IMailMessageFiller>());
-            Assert.NotNull(serviceProvider.GetRequiredService<ITemplateFactory>());
-            Assert.NotNull(serviceProvider.GetRequiredService<IMailSender>());
-        }
-
         [Fact]
         public void GivenBuilderThenServicesCreated()
         {

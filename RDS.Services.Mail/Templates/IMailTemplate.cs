@@ -2,9 +2,9 @@
 {
     public interface IMailTemplate
     {
-        string Body { get; }
-        string Name { get; }
-        string Subject { get; }
-        bool IsBodyHtml { get; }
+        string Body { get; set; }
+        string Name { get; set; }
+        string Subject { get; set; }
+        bool IsBodyHtml { get; set; }
     }
 }

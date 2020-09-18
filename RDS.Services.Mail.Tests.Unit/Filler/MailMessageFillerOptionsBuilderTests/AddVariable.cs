@@ -9,17 +9,13 @@ using Xunit;
 namespace RDS.Services.Mail.Tests.Unit.Filler.MailMessageFillerOptionsBuilderTests
 {
     [Trait("Category", "MailMessageFillerOptionsBuilder")]
-    public class AddVariable : IClassFixture<MailServiceOptionsFixture>
+    public class AddVariable
     {
         MailMessageFillerOptionsBuilder _builder;
-        IMailMessageFillerOptions _options;
-        ConcurrentDictionary<string, string> _variables = new ConcurrentDictionary<string, string>();
 
-        public AddVariable(MailServiceOptionsFixture fixture)
+        public AddVariable()
         {
-            _options = fixture.FillerOptions;
             _builder = new MailMessageFillerOptionsBuilder();
-            Mock.Get(_options).Setup(o => o.Variables).Returns(_variables);
         }
 
         [Fact]
@@ -37,9 +33,9 @@ namespace RDS.Services.Mail.Tests.Unit.Filler.MailMessageFillerOptionsBuilderTes
         [Fact]
         public void GivenParametersThenOptionSeted()
         {
-            _builder.AddVariable("name", "value");
+            MailMessageFillerOptions result = _builder.AddVariable("name", "value");
 
-            Assert.Equal("value", _variables["name"]);
+            Assert.Equal("value", result.Variables["name"]);
         }
     }
 }
