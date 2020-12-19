@@ -1,2 +1,2 @@
 # RDS.Services.Mail
-Library to send email using templates
+Library to send emails using templates
