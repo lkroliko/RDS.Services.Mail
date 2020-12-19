@@ -6,6 +6,7 @@
     <Authors>Łukasz Królikowski</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/lkroliko/RDS.Services.Mail</PackageProjectUrl>
+    <Version>1.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>

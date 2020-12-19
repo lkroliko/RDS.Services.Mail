@@ -20,6 +20,12 @@ namespace RDS.Services.Mail
             _sender = sender;
         }
 
+        public IMailService AddRecipient(string email)
+        {
+            MessageTemplate.To.Add(email);
+            return this;
+        }
+
         public void SendTemplate()
         {
             _sender.Send(MessageTemplate);
