@@ -9,42 +9,33 @@ using Xunit;
 namespace RDS.Services.Mail.Tests.Unit.MailServiceTests
 {
     [Trait("Category", "MailService")]
-    public class Fill
+    public class FillTemplate
     {
         IMailService _service;
         IMailMessageFiller _filler;
         MailMessage _message;
         object _model;
-        public Fill()
+
+        public FillTemplate()
         {
             _message = new MailMessage();
             _model = new object();
             _filler = Mock.Of<IMailMessageFiller>();
-            _service = new MailService(null, _filler, null);
-            
+            _service = new MailService(null, _filler, null); 
         }
 
         [Fact]
         public void ItHasMethod()
         {
-            _service.Fill(_message,_model);
-            _service.Fill(_message);
+            _service.FillTemplate(_model);
         }
 
         [Fact]
-        public void GivemMailMessageAndModelThenMessageFilled()
+        public void GivemModelThenMailMessageFillerCalled()
         {
-            _service.Fill(_message, _model);
+            _service.FillTemplate(_model);
 
-            Mock.Get(_filler).Verify(f => f.Fill(_message, _model), Times.Once);
-        }
-
-        [Fact]
-        public void GivemMailMessageThenMessageFilled()
-        {
-            _service.Fill(_message);
-
-            Mock.Get(_filler).Verify(f => f.Fill(_message), Times.Once);
+            Mock.Get(_filler).Verify(f => f.Fill(_service.MessageTemplate, _model), Times.Once);
         }
     }
 }

@@ -12,33 +12,34 @@ using Xunit;
 namespace MailServiceTest.MailServiceTests
 {
     [Trait("Category", "MailService")]
-    public class Send
+    public class SendTemplate
     {
         MailService _service;
         IMailSender _sender = Mock.Of<IMailSender>();
         IMailMessageFiller _filler = Mock.Of<IMailMessageFiller>();
         ITemplateFactory _factory = Mock.Of<ITemplateFactory>();
-        MailMessage _message = new MailMessage();
-        object _object = new object();
+        MailMessage _template = new MailMessage();
+        string _templateName = "any";
 
-        public Send()
+        public SendTemplate()
         {
+            Mock.Get(_factory).Setup(f => f.Get(It.IsAny<string>())).Returns(_template);
             _service = new MailService(_factory, _filler, _sender);
+            _service.LoadTemplate(_templateName);
         }
 
         [Fact]
         public void ItHasMethod()
         {
-            _service.Send(new MailMessage());
+            _service.SendTemplate();
         }
 
         [Fact]
-        public void GivenMessageThenCallFillerFillFromAddressAndSenderSend()
+        public void WhanCalledThenMailSenderCalled()
         {
-            _service.Send(_message);
+            _service.SendTemplate();
 
-            Mock.Get(_filler).Verify(f => f.FillFromAddress(_message), Times.Once);
-            Mock.Get(_sender).Verify(s => s.Send(_message), Times.Once);
+            Mock.Get(_sender).Verify(s => s.Send(_service.MessageTemplate), Times.Once);
         }
     }
 }

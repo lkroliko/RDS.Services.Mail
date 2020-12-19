@@ -8,9 +8,10 @@ namespace RDS.Services.Mail
 {
     public class MailService : IMailService
     {
-        ITemplateFactory _factory;
-        IMailMessageFiller _filler;
-        IMailSender _sender;
+        private readonly ITemplateFactory _factory;
+        private readonly IMailMessageFiller _filler;
+        private readonly IMailSender _sender;
+        public MailMessage MessageTemplate { get; private set; }
 
         public MailService(ITemplateFactory factory, IMailMessageFiller filler, IMailSender sender)
         {
@@ -19,55 +20,27 @@ namespace RDS.Services.Mail
             _sender = sender;
         }
 
-        public void Send(MailMessage message)
+        public void SendTemplate()
         {
-            _filler.FillFromAddress(message);
-            _sender.Send(message);
+            _sender.Send(MessageTemplate);
         }
 
-        public async Task SendAsync(MailMessage message)
+        public async Task SendTemplateAsync()
         {
-            _filler.FillFromAddress(message);
-            await _sender.SendAsync(message);
+            await _sender.SendAsync(MessageTemplate);
         }
 
-        public MailMessage GetTemplate(string name)
+        public IMailService LoadTemplate(string name)
         {
-            return _factory.Get(name);
+            MessageTemplate = _factory.Get(name);
+            _filler.FillFromAddress(MessageTemplate);
+            return this;
         }
 
-        public void Fill(MailMessage message, object model)
+        public IMailService FillTemplate(object model)
         {
-            _filler.Fill(message, model);
-        }
-
-        public void Fill(MailMessage message)
-        {
-            _filler.Fill(message);
-        }
-
-        public void FillAndSend(MailMessage message)
-        {
-            _filler.Fill(message);
-            _sender.Send(message);
-        }
-
-        public void FillAndSend(MailMessage message, object model)
-        {
-            _filler.Fill(message, model);
-            _sender.Send(message);
-        }
-
-        public async Task FillAndSendAsync(MailMessage message)
-        {
-            _filler.Fill(message);
-            await _sender.SendAsync(message);
-        }
-
-        public async Task FillAndSendAsync(MailMessage message, object model)
-        {
-            _filler.Fill(message, model);
-            await _sender.SendAsync(message);
+            _filler.Fill(MessageTemplate, model);
+            return this;
         }
     }
 }

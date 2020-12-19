@@ -1,3 +1,4 @@
+using FluentAssertions;
 using MailServiceIntegrationTests.Fakes;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,6 +17,8 @@ namespace MailServiceIntegrationTests
     {
         ServiceProvider _serviceProvider;
         MailServiceFixture _fixture;
+        string _fromAddress = "sender@host.local";
+        string _fromDisplayName = "Sender display name";
 
         public JsonConfiguration(MailServiceFixture fixture)
         {
@@ -38,15 +41,13 @@ namespace MailServiceIntegrationTests
         public void GivenTemoplateNameThenMailMessageReturnedAndSended(string templateName)
         {
             IMailService service = _serviceProvider.GetRequiredService<IMailService>();
-            
-            MailMessage message = service.GetTemplate(templateName);
-            service.Send(message);
+
+            service.LoadTemplate(templateName).SendTemplate();
 
             MailMessage result = _fixture.Sender.Sended.Where(m=>m.Body == templateName).First();
-            Assert.Equal(message, result);
             Assert.Equal(templateName, result.Body);
-            Assert.Equal("from@host.local", result.From.Address);
-            Assert.Equal("From", result.From.DisplayName);
+            result.From.Address.Should().Be(_fromAddress);
+            result.From.DisplayName.Should().Be(_fromDisplayName);
         }
     }
 }

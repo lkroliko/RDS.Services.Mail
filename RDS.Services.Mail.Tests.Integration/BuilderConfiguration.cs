@@ -6,6 +6,7 @@ using System;
 using System.Linq;
 using System.Net.Mail;
 using Xunit;
+using FluentAssertions;
 
 namespace MailServiceIntegrationTests
 {
@@ -14,14 +15,17 @@ namespace MailServiceIntegrationTests
     {
         ServiceProvider _serviceProvider;
         MailServiceFixture _fixture;
+        string _templateName = "template name";
+        string _fromAddress = "sender@host.local";
+        string _fromDisplayName = "Sender display name";
 
         public BuilderConfiguration(MailServiceFixture fixture)
         {
             _fixture = fixture;
             _fixture.Services.AddMail(options => options
             .UseSmtpServer("192.168.0.2")
-            .UseSenderAddress("sender@host.local", "Sender")
-            .UseTemplates(options=>options.AddTemplate(new FileMailTemplate() { Name = "name" })));
+            .UseSenderAddress(_fromAddress, _fromDisplayName)
+            .UseTemplates(options=>options.AddTemplate(new FileMailTemplate() { Name = _templateName })));
 
             _fixture.AddFakeSender();
 
@@ -29,16 +33,14 @@ namespace MailServiceIntegrationTests
         }
 
         [Fact]
-        public void Test1()
+        public void SendTest()
         {
             IMailService service = _serviceProvider.GetRequiredService<IMailService>();
-            MailMessage message = new MailMessage();
-
-            service.Send(message);
+   
+            service.LoadTemplate(_templateName).SendTemplate();
             MailMessage actual = _fixture.Sender.Sended.First();
-            Assert.Equal(message, actual);
-            Assert.Equal("sender@host.local", actual.From.Address);
-            Assert.Equal("Sender", actual.From.DisplayName);
+            actual.From.Address.Should().Be(_fromAddress);
+            actual.From.DisplayName.Should().Be(_fromDisplayName);
         }
     }
 }
